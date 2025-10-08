@@ -1,5 +1,7 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 import { BLOCKS, INLINES } from '@contentful/rich-text-types';
+const { getAllPosts, getPostBySlug } = require('../../lib/posts');
+
 
 export default function Post({ post }) {
   // Rich text rendering options
@@ -386,13 +388,35 @@ export default function Post({ post }) {
   );
 }
 
-// getStaticProps와 getStaticPaths는 기존 코드 유지
 export async function getStaticProps({ params }) {
-  // 기존 Contentful 데이터 fetching 로직 유지
-  // ...
+  const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      post,
+    },
+    // 게시글 업데이트 시 Next.js가 60초마다 콘텐츠를 재생성하도록 설정
+    revalidate: 60, 
+  };
 }
 
 export async function getStaticPaths() {
-  // 기존 경로 생성 로직 유지
-  // ...
+  // 🚨 getAllPosts를 호출하여 유효한 경로 목록을 가져옵니다.
+  const posts = await getAllPosts();
+  
+  const paths = posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+
+  // Next.js에 경로와 fallback 설정을 반환합니다.
+  return {
+    paths,
+    fallback: false,
+  };
 }
