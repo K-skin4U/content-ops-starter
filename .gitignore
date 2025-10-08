@@ -1,0 +1,20 @@
+# .gitignore
+
+# Next.js 빌드 관련 폴더 및 파일
+.next/
+out/
+
+# 종속성 (설치된 라이브러리)
+node_modules/
+
+# 환경 변수 파일 (보안상 매우 중요!)
+.env
+.env.local 
+.env.development.local
+.env.production.local
+
+# 로그 및 캐시
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
