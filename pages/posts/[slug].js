@@ -23,7 +23,7 @@ export default function Post({ post }) {
         {/* 순위 배지 */}
         <div className="rank-badge-container">
           <span className={`rank-badge ${isBest ? 'best' : ''}`}>
-            {isBest ? '🏆 1위 - BEST' : `${rank}위`}
+            {isBest ? '🏆 #1 - BEST PICK' : `#${rank}`}
           </span>
         </div>
 
@@ -334,7 +334,11 @@ export default function Post({ post }) {
           <div className="brand-badge">✨ Carefully selected by K-skin4U</div>
           <h1 className="hero-title">🌟 {post.title} 🌟</h1>
           <p className="hero-date">
-            발행일: {new Date(post.date).toLocaleDateString('ko-KR')}
+            Published: {new Date(post.date).toLocaleDateString('en-US', { 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}
           </p>
         </div>
 
@@ -356,6 +360,50 @@ export default function Post({ post }) {
             </div>
           )}
 
+          {/* 제품 #5 */}
+          <ProductCard
+            rank={5}
+            title={post.product5Title || "Product #5"}
+            description={post.product5Description}
+            image={post.product5Image}
+            benefits={post.product5KeyBenefits}
+            link={post.product5AffiliateLink}
+            isBest={false}
+          />
+
+          {/* 제품 #4 */}
+          <ProductCard
+            rank={4}
+            title={post.product4Title || "Product #4"}
+            description={post.product4Description}
+            image={post.product4Image}
+            benefits={post.product4KeyBenefits}
+            link={post.product4AffiliateLink}
+            isBest={false}
+          />
+
+          {/* 제품 #3 */}
+          <ProductCard
+            rank={3}
+            title={post.product3Title || "Product #3"}
+            description={post.product3Description}
+            image={post.product3Image}
+            benefits={post.product3KeyBenefits}
+            link={post.product3AffiliateLink}
+            isBest={false}
+          />
+
+          {/* 제품 #2 */}
+          <ProductCard
+            rank={2}
+            title={post.product2Title || "Product #2"}
+            description={post.product2Description}
+            image={post.product2Image}
+            benefits={post.product2KeyBenefits}
+            link={post.product2AffiliateLink}
+            isBest={false}
+          />
+
           {/* 제품 #1 */}
           <ProductCard
             rank={1}
@@ -367,49 +415,9 @@ export default function Post({ post }) {
             isBest={true}
           />
 
-          {/* 제품 #2 */}
-          <ProductCard
-            rank={2}
-            title={post.product2Title || "Product #2"}
-            description={post.product2Description}
-            image={post.product2Image}
-            benefits={post.product2KeyBenefits}
-            link={post.product2AffiliateLink}
-          />
-
-          {/* 제품 #3 */}
-          <ProductCard
-            rank={3}
-            title={post.product3Title || "Product #3"}
-            description={post.product3Description}
-            image={post.product3Image}
-            benefits={post.product3KeyBenefits}
-            link={post.product3AffiliateLink}
-          />
-
-          {/* 제품 #4 */}
-          <ProductCard
-            rank={4}
-            title={post.product4Title || "Product #4"}
-            description={post.product4Description}
-            image={post.product4Image}
-            benefits={post.product4KeyBenefits}
-            link={post.product4AffiliateLink}
-          />
-
-          {/* 제품 #5 */}
-          <ProductCard
-            rank={5}
-            title={post.product5Title || "Product #5"}
-            description={post.product5Description}
-            image={post.product5Image}
-            benefits={post.product5KeyBenefits}
-            link={post.product5AffiliateLink}
-          />
-
           {/* Final CTA */}
           <div className="final-cta">
-            <h2>🛒 지금 바로 구매하러 가기</h2>
+            <h2>🛒 Shop Now</h2>
             {post.affiliateLink && (
               <>
                 <a
@@ -418,10 +426,10 @@ export default function Post({ post }) {
                   rel="nofollow noopener noreferrer"
                   className="buy-button"
                 >
-                  제품 구매 사이트 바로가기
+                  View Products
                 </a>
                 <p className="final-cta-disclaimer">
-                  * 본 링크는 제휴 링크일 수 있습니다.
+                  * This link may contain affiliate links.
                 </p>
               </>
             )}
