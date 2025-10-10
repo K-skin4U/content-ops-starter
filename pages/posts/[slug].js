@@ -12,57 +12,64 @@ export default function Post({ post }) {
   };
 
   // 제품 카드 컴포넌트
-  const ProductCard = ({ rank, title, description, image, benefits, link, isBest }) => (
-    <div className={`product-card ${isBest ? 'best-product' : ''}`}>
-      {/* 순위 배지 */}
-      <div className="rank-badge-container">
-        <span className={`rank-badge ${isBest ? 'best' : ''}`}>
-          {isBest ? '🏆 1위 - BEST' : `${rank}위`}
-        </span>
-      </div>
+  const ProductCard = ({ rank, title, description, image, benefits, link, isBest }) => {
+    // 모든 필드가 비어있으면 카드를 렌더링하지 않음
+    if (!title && !description && !image && !benefits && !link) {
+      return null;
+    }
 
-      {/* 제품 제목 */}
-      <h2 className="product-title">{title}</h2>
-
-      {/* 제품 이미지 */}
-      {image && (
-        <img
-          src={`https:${image.fields.file.url}`}
-          alt={title}
-          className="product-image"
-        />
-      )}
-
-      {/* 제품 설명 */}
-      {description && (
-        <div className="product-description">
-          {documentToReactComponents(description, simpleRenderOptions)}
+    return (
+      <div className={`product-card ${isBest ? 'best-product' : ''}`}>
+        {/* 순위 배지 */}
+        <div className="rank-badge-container">
+          <span className={`rank-badge ${isBest ? 'best' : ''}`}>
+            {isBest ? '🏆 1위 - BEST' : `${rank}위`}
+          </span>
         </div>
-      )}
 
-      {/* Key Benefits */}
-      {benefits && (
-        <div className="benefits-section">
-          <h3 className="benefits-title">✨ Key Benefits</h3>
-          <div className="benefits-content">
-            {documentToReactComponents(benefits, simpleRenderOptions)}
+        {/* 제품 제목 */}
+        {title && <h2 className="product-title">{title}</h2>}
+
+        {/* 제품 이미지 */}
+        {image && image.fields && image.fields.file && (
+          <img
+            src={`https:${image.fields.file.url}`}
+            alt={title || 'Product'}
+            className="product-image"
+          />
+        )}
+
+        {/* 제품 설명 */}
+        {description && description.content && (
+          <div className="product-description">
+            {documentToReactComponents(description, simpleRenderOptions)}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* 구매 버튼 */}
-      {link && (
-        <a
-          href={link}
-          target="_blank"
-          rel="nofollow noopener noreferrer"
-          className="buy-button"
-        >
-          🛒 View Product
-        </a>
-      )}
-    </div>
-  );
+        {/* Key Benefits */}
+        {benefits && benefits.content && (
+          <div className="benefits-section">
+            <h3 className="benefits-title">✨ Key Benefits</h3>
+            <div className="benefits-content">
+              {documentToReactComponents(benefits, simpleRenderOptions)}
+            </div>
+          </div>
+        )}
+
+        {/* 구매 버튼 */}
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            className="buy-button"
+          >
+            🛒 View Product
+          </a>
+        )}
+      </div>
+    );
+  };
 
   return (
     <div className="page-container">
@@ -343,7 +350,7 @@ export default function Post({ post }) {
         {/* Content Area */}
         <div className="content-wrapper">
           {/* 인트로 섹션 (기존 content 필드 사용) */}
-          {post.content && (
+          {post.content && post.content.content && (
             <div className="intro-section">
               {documentToReactComponents(post.content, simpleRenderOptions)}
             </div>
