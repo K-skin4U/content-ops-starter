@@ -1,29 +1,71 @@
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
-import { BLOCKS, INLINES } from '@contentful/rich-text-types';
-const { getAllPosts, getPostBySlug } = require('../../lib/posts');
-
+import { BLOCKS } from '@contentful/rich-text-types';
 
 export default function Post({ post }) {
-  // Rich text rendering options
-  const renderOptions = {
+  // Rich Text 렌더링 옵션 (간단한 설명용)
+  const simpleRenderOptions = {
     renderNode: {
-      [INLINES.HYPERLINK]: (node, children) => {
-        return (
-          <a 
-            href={node.data.uri} 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="product-link"
-          >
-            {children}
-          </a>
-        );
-      },
+      [BLOCKS.PARAGRAPH]: (node, children) => <p>{children}</p>,
+      [BLOCKS.UL_LIST]: (node, children) => <ul className="benefits-list">{children}</ul>,
+      [BLOCKS.LIST_ITEM]: (node, children) => <li>{children}</li>,
     },
   };
 
+  // 제품 카드 컴포넌트
+  const ProductCard = ({ rank, title, description, image, benefits, link, isBest }) => (
+    <div className={`product-card ${isBest ? 'best-product' : ''}`}>
+      {/* 순위 배지 */}
+      <div className="rank-badge-container">
+        <span className={`rank-badge ${isBest ? 'best' : ''}`}>
+          {isBest ? '🏆 1위 - BEST' : `${rank}위`}
+        </span>
+      </div>
+
+      {/* 제품 제목 */}
+      <h2 className="product-title">{title}</h2>
+
+      {/* 제품 이미지 */}
+      {image && (
+        <img
+          src={`https:${image.fields.file.url}`}
+          alt={title}
+          className="product-image"
+        />
+      )}
+
+      {/* 제품 설명 */}
+      {description && (
+        <div className="product-description">
+          {documentToReactComponents(description, simpleRenderOptions)}
+        </div>
+      )}
+
+      {/* Key Benefits */}
+      {benefits && (
+        <div className="benefits-section">
+          <h3 className="benefits-title">✨ Key Benefits</h3>
+          <div className="benefits-content">
+            {documentToReactComponents(benefits, simpleRenderOptions)}
+          </div>
+        </div>
+      )}
+
+      {/* 구매 버튼 */}
+      {link && (
+        <a
+          href={link}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          className="buy-button"
+        >
+          🛒 View Product
+        </a>
+      )}
+    </div>
+  );
+
   return (
-    <>
+    <div className="page-container">
       <style jsx global>{`
         * {
           margin: 0;
@@ -32,363 +74,360 @@ export default function Post({ post }) {
         }
 
         body {
-          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-          line-height: 1.6;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+          line-height: 1.7;
           color: #333;
           background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
         }
 
-        .container {
-          max-width: 900px;
+        .page-container {
+          max-width: 1000px;
           margin: 0 auto;
           background: white;
-          box-shadow: 0 10px 50px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 10px 50px rgba(0,0,0,0.1);
+          min-height: 100vh;
         }
 
-        header {
+        /* Hero Header */
+        .hero-header {
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 60px 40px;
+          padding: 60px 40px 40px;
           text-align: center;
+          position: relative;
         }
 
-        header h1 {
-          font-size: 2.5em;
-          margin-bottom: 10px;
-          text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        .hero-header::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 30px;
+          background: white;
+          border-radius: 30px 30px 0 0;
         }
 
-        .date {
+        .brand-badge {
+          display: inline-block;
+          background: rgba(255,255,255,0.25);
+          padding: 8px 24px;
+          border-radius: 25px;
           font-size: 0.9em;
-          opacity: 0.9;
+          margin-bottom: 20px;
+        }
+
+        .hero-title {
+          font-size: 2.8em;
+          margin-bottom: 15px;
+          font-weight: 700;
+        }
+
+        .hero-date {
+          opacity: 0.95;
+          font-size: 1em;
         }
 
         .hero-image {
           width: 100%;
-          height: 400px;
+          height: 450px;
           object-fit: cover;
           display: block;
         }
 
-        .content {
+        /* 콘텐츠 영역 */
+        .content-wrapper {
           padding: 50px 40px;
         }
 
-        .intro {
-          background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-          padding: 30px;
-          border-radius: 15px;
-          margin-bottom: 40px;
-          border-left: 5px solid #ff6b6b;
-        }
-
-        .intro h2 {
-          color: #2c3e50;
-          margin-bottom: 15px;
-          font-size: 1.8em;
-        }
-
-        .intro p {
+        .intro-section {
+          margin-bottom: 50px;
           font-size: 1.1em;
-          color: #34495e;
+          line-height: 1.8;
+          color: #555;
         }
 
-        .serum-card {
+        /* 제품 카드 */
+        .product-card {
+          margin: 40px 0;
+          padding: 40px;
           background: white;
           border-radius: 20px;
-          padding: 35px;
-          margin-bottom: 30px;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
           border: 2px solid #f0f0f0;
-          transition: transform 0.3s, box-shadow 0.3s;
-          position: relative;
-          overflow: hidden;
+          transition: all 0.4s ease;
         }
 
-        .serum-card::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 5px;
-          height: 100%;
-          background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .serum-card:hover {
+        .product-card:hover {
+          border-color: #667eea;
+          box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
           transform: translateY(-5px);
-          box-shadow: 0 8px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .product-card.best-product {
+          border: 3px solid #f5576c;
+          background: linear-gradient(135deg, #fff9fb 0%, #fff5f7 100%);
+        }
+
+        .rank-badge-container {
+          margin-bottom: 25px;
         }
 
         .rank-badge {
           display: inline-block;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 8px 20px;
-          border-radius: 25px;
-          font-weight: bold;
-          font-size: 0.9em;
-          margin-bottom: 15px;
+          padding: 12px 28px;
+          border-radius: 30px;
+          font-weight: 700;
+          font-size: 1.3em;
         }
 
-        .best-badge {
+        .rank-badge.best {
           background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-          font-size: 1em;
-          padding: 10px 25px;
-        }
-
-        .serum-card h3 {
-          color: #2c3e50;
           font-size: 1.5em;
-          margin-bottom: 15px;
-          line-height: 1.4;
+          animation: pulse 2s infinite;
         }
 
-        .description {
+        @keyframes pulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.05); }
+        }
+
+        .product-title {
+          font-size: 1.8em;
+          margin: 20px 0;
+          color: #2c3e50;
+          font-weight: 700;
+        }
+
+        .product-image {
+          width: 100%;
+          border-radius: 12px;
+          margin: 20px 0;
+          box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-description {
+          font-size: 1.05em;
+          line-height: 1.9;
           color: #555;
-          margin-bottom: 20px;
-          line-height: 1.8;
-        }
-
-        .features {
-          background: #f8f9fa;
-          padding: 20px;
-          border-radius: 10px;
           margin: 20px 0;
         }
 
-        .features h4 {
+        .benefits-section {
+          background: linear-gradient(135deg, #f8f9ff 0%, #f0f4ff 100%);
+          padding: 25px;
+          border-radius: 12px;
+          margin: 25px 0;
+        }
+
+        .benefits-title {
           color: #667eea;
-          margin-bottom: 10px;
-          font-size: 1.1em;
+          font-size: 1.3em;
+          margin-bottom: 15px;
         }
 
-        .features ul {
+        .benefits-content {
+          color: #444;
+        }
+
+        .benefits-list {
           list-style: none;
-          padding-left: 0;
+          padding: 0;
         }
 
-        .features li {
-          padding: 8px 0;
-          padding-left: 25px;
+        .benefits-list li {
+          padding: 12px 0 12px 35px;
           position: relative;
+          font-size: 1.05em;
         }
 
-        .features li::before {
-          content: "✓";
+        .benefits-list li::before {
+          content: '✓';
           position: absolute;
           left: 0;
           color: #667eea;
           font-weight: bold;
+          font-size: 1.3em;
+          top: 8px;
         }
 
         .buy-button {
           display: inline-block;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           color: white;
-          padding: 15px 35px;
+          padding: 16px 45px;
+          border-radius: 35px;
           text-decoration: none;
-          border-radius: 30px;
-          font-weight: bold;
-          transition: transform 0.3s, box-shadow 0.3s;
-          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+          font-weight: 700;
+          font-size: 1.1em;
+          transition: all 0.3s ease;
+          margin: 20px 0;
+          box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
         }
 
         .buy-button:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+          transform: translateY(-3px) scale(1.05);
+          box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .cta-section {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        /* Final CTA */
+        .final-cta {
+          margin-top: 70px;
           padding: 50px 40px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 20px;
           text-align: center;
           color: white;
-          margin-top: 50px;
         }
 
-        .cta-section h2 {
-          font-size: 2em;
-          margin-bottom: 20px;
-        }
-
-        .cta-section p {
-          font-size: 1.1em;
+        .final-cta h2 {
+          font-size: 2.3em;
           margin-bottom: 30px;
-          opacity: 0.9;
         }
 
-        .cta-button {
-          display: inline-block;
-          background: white;
-          color: #667eea;
-          padding: 18px 45px;
-          text-decoration: none;
-          border-radius: 30px;
-          font-weight: bold;
-          font-size: 1.1em;
-          transition: transform 0.3s, box-shadow 0.3s;
-          box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .cta-button:hover {
-          transform: scale(1.05);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .disclaimer {
-          font-size: 0.85em;
+        .final-cta-disclaimer {
+          font-size: 0.9em;
           margin-top: 20px;
-          opacity: 0.8;
+          opacity: 0.85;
         }
 
-        footer {
-          background: #2c3e50;
-          color: white;
-          text-align: center;
-          padding: 30px;
-        }
-
+        /* 반응형 */
         @media (max-width: 768px) {
-          header h1 {
-            font-size: 1.8em;
+          .hero-header {
+            padding: 40px 20px 30px;
           }
-
-          .content {
+          
+          .hero-title {
+            font-size: 2em;
+          }
+          
+          .content-wrapper {
             padding: 30px 20px;
           }
-
-          .serum-card {
-            padding: 25px;
+          
+          .product-card {
+            padding: 25px 20px;
+          }
+          
+          .rank-badge {
+            font-size: 1.1em;
+            padding: 10px 20px;
+          }
+          
+          .product-title {
+            font-size: 1.5em;
           }
         }
       `}</style>
 
-      <div className="container">
-        <header>
-          <h1>🌟 {post.title} 🌟</h1>
-          <p className="date">Published: {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
-        </header>
+      <main>
+        {/* Hero Header */}
+        <div className="hero-header">
+          <div className="brand-badge">✨ Carefully selected by K-skin4U</div>
+          <h1 className="hero-title">🌟 {post.title} 🌟</h1>
+          <p className="hero-date">
+            발행일: {new Date(post.date).toLocaleDateString('ko-KR')}
+          </p>
+        </div>
 
+        {/* Hero Image */}
         {post.heroImage && (
-          <img 
+          <img
             src={`https:${post.heroImage.fields.file.url}`}
             alt={post.title}
             className="hero-image"
           />
         )}
 
-        <div className="content">
-          <div className="intro">
-            <h2>Carefully Selected by K-skin4U</h2>
-            <p>The heat is fading away, and the cool, clear skies are a welcome sight, aren't they? But the season your skin hates the most has arrived. To ensure your skin stays hydrated and glowing, we've compiled five of the best face serums for this fall. Each product has been carefully tested and reviewed to bring you the ultimate skincare solutions.</p>
-          </div>
-
-          {/* Product #5 */}
-          <div className="serum-card">
-            <span className="rank-badge">#5</span>
-            <h3>COSRX 6X Peptide Collagen Booster Toner Serum</h3>
-            <p className="description">This innovative dual-function product works as both a toner and serum, packed with six types of peptides to boost collagen production. Perfect for those looking to improve skin elasticity and reduce fine lines while maintaining optimal hydration levels.</p>
-            <div className="features">
-              <h4>Key Benefits:</h4>
-              <ul>
-                <li>6 types of peptides for enhanced collagen synthesis</li>
-                <li>Lightweight, fast-absorbing formula</li>
-                <li>Improves skin firmness and elasticity</li>
-                <li>Suitable for all skin types</li>
-              </ul>
+        {/* Content Area */}
+        <div className="content-wrapper">
+          {/* 인트로 섹션 (기존 content 필드 사용) */}
+          {post.content && (
+            <div className="intro-section">
+              {documentToReactComponents(post.content, simpleRenderOptions)}
             </div>
-            <a href="https://amzn.to/48CQY6f" className="buy-button" target="_blank" rel="noopener noreferrer">View Product →</a>
-          </div>
+          )}
 
-          {/* Product #4 */}
-          <div className="serum-card">
-            <span className="rank-badge">#4</span>
-            <h3>SeoulCeuticals Korean Skin Care 20% Vitamin C Hyaluronic Acid Serum</h3>
-            <p className="description">A powerhouse brightening serum featuring a potent 20% vitamin C concentration combined with hyaluronic acid. This Korean beauty favorite targets dark spots, uneven skin tone, and dullness while providing deep hydration for a radiant, youthful glow.</p>
-            <div className="features">
-              <h4>Key Benefits:</h4>
-              <ul>
-                <li>High-potency 20% vitamin C for maximum brightening</li>
-                <li>Hyaluronic acid for intense hydration</li>
-                <li>Reduces hyperpigmentation and dark spots</li>
-                <li>Anti-aging properties with antioxidant protection</li>
-              </ul>
-            </div>
-            <a href="https://amzn.to/3Wrkm7X" className="buy-button" target="_blank" rel="noopener noreferrer">View Product →</a>
-          </div>
+          {/* 제품 #1 */}
+          <ProductCard
+            rank={1}
+            title={post.product1Title || "Product #1"}
+            description={post.product1Description}
+            image={post.product1Image}
+            benefits={post.product1KeyBenefits}
+            link={post.product1AffiliateLink}
+            isBest={true}
+          />
 
-          {/* Product #3 */}
-          <div className="serum-card">
-            <span className="rank-badge">#3</span>
-            <h3>Beauty of Joseon Glow Serum - Propolis and Niacinamide</h3>
-            <p className="description">A cult-favorite K-beauty serum that combines the healing power of propolis with the brightening effects of niacinamide. This gentle yet effective formula soothes irritation, controls sebum production, and delivers a natural, healthy glow to all skin types.</p>
-            <div className="features">
-              <h4>Key Benefits:</h4>
-              <ul>
-                <li>60% propolis extract for healing and nourishment</li>
-                <li>2% niacinamide for brightening and pore refinement</li>
-                <li>Calms inflammation and redness</li>
-                <li>Lightweight honey-like texture</li>
-              </ul>
-            </div>
-            <a href="https://amzn.to/436PEVi" className="buy-button" target="_blank" rel="noopener noreferrer">View Product →</a>
-          </div>
+          {/* 제품 #2 */}
+          <ProductCard
+            rank={2}
+            title={post.product2Title || "Product #2"}
+            description={post.product2Description}
+            image={post.product2Image}
+            benefits={post.product2KeyBenefits}
+            link={post.product2AffiliateLink}
+          />
 
-          {/* Product #2 */}
-          <div className="serum-card">
-            <span className="rank-badge">#2</span>
-            <h3>COSRX Niacinamide 15% Peptide Booster Set</h3>
-            <p className="description">An advanced skincare solution featuring a high concentration of 15% niacinamide combined with peptide technology. This powerful duo tackles multiple skin concerns including enlarged pores, uneven texture, dullness, and loss of firmness, making it an excellent choice for comprehensive skin improvement.</p>
-            <div className="features">
-              <h4>Key Benefits:</h4>
-              <ul>
-                <li>15% niacinamide for superior pore refinement</li>
-                <li>Peptide complex for anti-aging benefits</li>
-                <li>Minimizes appearance of enlarged pores</li>
-                <li>Improves overall skin texture and tone</li>
-              </ul>
-            </div>
-            <a href="https://amzn.to/3IXLybk" className="buy-button" target="_blank" rel="noopener noreferrer">View Product →</a>
-          </div>
+          {/* 제품 #3 */}
+          <ProductCard
+            rank={3}
+            title={post.product3Title || "Product #3"}
+            description={post.product3Description}
+            image={post.product3Image}
+            benefits={post.product3KeyBenefits}
+            link={post.product3AffiliateLink}
+          />
 
-          {/* Product #1 */}
-          <div className="serum-card">
-            <span className="best-badge">🏆 #1 BEST CHOICE</span>
-            <h3>Sulwhasoo First Care Activating Serum</h3>
-            <p className="description">The ultimate luxury Korean skincare experience. This premium first treatment serum is formulated with JAUM Balancing Complex™ and precious Korean herbal ingredients that have been fermented to enhance their efficacy. It prepares your skin to absorb subsequent products better while providing anti-aging, brightening, and hydrating benefits all in one elegant formula.</p>
-            <div className="features">
-              <h4>Key Benefits:</h4>
-              <ul>
-                <li>JAUM Balancing Complex™ with 5 precious Korean herbs</li>
-                <li>Enhances absorption of subsequent skincare products</li>
-                <li>Provides comprehensive anti-aging care</li>
-                <li>Brightens and evens skin tone</li>
-                <li>Deeply hydrates without heaviness</li>
-                <li>Luxurious texture and elegant herbal scent</li>
-              </ul>
-            </div>
-            <a href="https://amzn.to/4h01p5V" className="buy-button" target="_blank" rel="noopener noreferrer">View Product →</a>
+          {/* 제품 #4 */}
+          <ProductCard
+            rank={4}
+            title={post.product4Title || "Product #4"}
+            description={post.product4Description}
+            image={post.product4Image}
+            benefits={post.product4KeyBenefits}
+            link={post.product4AffiliateLink}
+          />
+
+          {/* 제품 #5 */}
+          <ProductCard
+            rank={5}
+            title={post.product5Title || "Product #5"}
+            description={post.product5Description}
+            image={post.product5Image}
+            benefits={post.product5KeyBenefits}
+            link={post.product5AffiliateLink}
+          />
+
+          {/* Final CTA */}
+          <div className="final-cta">
+            <h2>🛒 지금 바로 구매하러 가기</h2>
+            {post.affiliateLink && (
+              <>
+                <a
+                  href={post.affiliateLink}
+                  target="_blank"
+                  rel="nofollow noopener noreferrer"
+                  className="buy-button"
+                >
+                  제품 구매 사이트 바로가기
+                </a>
+                <p className="final-cta-disclaimer">
+                  * 본 링크는 제휴 링크일 수 있습니다.
+                </p>
+              </>
+            )}
           </div>
         </div>
-
-        <div className="cta-section">
-          <h2>🛒 Ready to Transform Your Skin?</h2>
-          <p>Don't miss out on these amazing serums. Click below to explore all our recommendations and find your perfect match!</p>
-          <a href={post.affiliateLink || "https://amzn.to/4mTcjLQ"} className="cta-button" target="_blank" rel="nofollow noopener noreferrer">Shop All Products Now</a>
-          <p className="disclaimer">* This page may contain affiliate links. We may earn a commission from purchases made through these links at no extra cost to you.</p>
-        </div>
-
-        <footer>
-          <p>&copy; 2025 K-skin4U. All rights reserved.</p>
-          <p>Your trusted source for Korean skincare recommendations</p>
-        </footer>
-      </div>
-    </>
+      </main>
+    </div>
   );
 }
 
+// getStaticProps와 getStaticPaths는 기존과 동일
 export async function getStaticProps({ params }) {
+  const { getPostBySlug } = require('../../lib/posts');
   const post = await getPostBySlug(params.slug);
 
   if (!post) {
@@ -401,20 +440,18 @@ export async function getStaticProps({ params }) {
     props: {
       post,
     },
-    // 게시글 업데이트 시 Next.js가 60초마다 콘텐츠를 재생성하도록 설정
-    revalidate: 60, 
+    revalidate: 60,
   };
 }
 
 export async function getStaticPaths() {
-  // 🚨 getAllPosts를 호출하여 유효한 경로 목록을 가져옵니다.
+  const { getAllPosts } = require('../../lib/posts');
   const posts = await getAllPosts();
   
   const paths = posts.map((post) => ({
     params: { slug: post.slug },
   }));
 
-  // Next.js에 경로와 fallback 설정을 반환합니다.
   return {
     paths,
     fallback: false,
