@@ -108,8 +108,8 @@ export default function Home({ posts }) {
         /* Articles Grid */
         .articles-grid {
           display: grid;
-          grid-template-columns: 1fr;
-          gap: 30px;
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          gap: 40px;
         }
 
         .article-card {
@@ -120,16 +120,11 @@ export default function Home({ posts }) {
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           cursor: pointer;
-          display: grid;
-          grid-template-columns: 280px 1fr;
-          gap: 0;
-          border: 2px solid transparent;
         }
 
         .article-card:hover {
-          transform: translateY(-4px);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-          border-color: #667eea;
+          transform: translateY(-8px);
+          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
         .article-card::before {
@@ -137,22 +132,21 @@ export default function Home({ posts }) {
           position: absolute;
           top: 0;
           left: 0;
-          bottom: 0;
-          width: 4px;
-          background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-          transform: scaleY(0);
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+          transform: scaleX(0);
           transition: transform 0.4s ease;
         }
 
         .article-card:hover::before {
-          transform: scaleY(1);
+          transform: scaleX(1);
         }
 
         .article-image-wrapper {
           position: relative;
           width: 100%;
-          height: 100%;
-          min-height: 220px;
+          height: 240px;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           overflow: hidden;
         }
@@ -169,18 +163,15 @@ export default function Home({ posts }) {
         }
 
         .article-content {
-          padding: 30px 35px;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+          padding: 30px;
         }
 
         .article-meta {
           display: flex;
           align-items: center;
-          gap: 12px;
-          margin-bottom: 12px;
-          font-size: 0.8rem;
+          gap: 15px;
+          margin-bottom: 15px;
+          font-size: 0.85rem;
           color: #999;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
@@ -193,21 +184,25 @@ export default function Home({ posts }) {
           gap: 6px;
         }
 
+        .article-date::before {
+          content: '📅';
+          font-size: 0.9rem;
+        }
+
         .article-category {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
-          padding: 4px 14px;
+          background: #f0f0f0;
+          padding: 4px 12px;
           border-radius: 20px;
-          font-weight: 600;
-          font-size: 0.75rem;
+          font-weight: 500;
+          color: #667eea;
         }
 
         .article-title {
-          font-size: 1.4rem;
+          font-size: 1.5rem;
           font-weight: 600;
           color: #2c2c2c;
           margin-bottom: 12px;
-          line-height: 1.4;
+          line-height: 1.3;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -221,7 +216,7 @@ export default function Home({ posts }) {
           margin-bottom: 20px;
           font-family: 'Lato', sans-serif;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
@@ -231,18 +226,17 @@ export default function Home({ posts }) {
           align-items: center;
           gap: 8px;
           color: #667eea;
-          font-weight: 700;
-          font-size: 0.85rem;
+          font-weight: 600;
+          font-size: 0.9rem;
           text-decoration: none;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
           letter-spacing: 1px;
-          transition: all 0.3s ease;
+          transition: gap 0.3s ease;
         }
 
         .read-more:hover {
           gap: 12px;
-          color: #764ba2;
         }
 
         .read-more::after {
@@ -381,21 +375,16 @@ export default function Home({ posts }) {
 
         /* Responsive */
         @media (max-width: 968px) {
-          .article-card {
+          .featured-article {
             grid-template-columns: 1fr;
           }
 
-          .article-image-wrapper {
-            height: 240px;
-            min-height: 240px;
-          }
-
           .featured-content {
-            padding: 30px;
+            padding: 40px 30px;
           }
 
           .featured-title {
-            font-size: 1.7rem;
+            font-size: 2rem;
           }
 
           .site-title {
@@ -404,6 +393,10 @@ export default function Home({ posts }) {
         }
 
         @media (max-width: 768px) {
+          .articles-grid {
+            grid-template-columns: 1fr;
+          }
+
           .site-title {
             font-size: 2rem;
           }
@@ -413,11 +406,7 @@ export default function Home({ posts }) {
           }
 
           .featured-image-wrapper {
-            height: 280px;
-          }
-
-          .article-content {
-            padding: 25px;
+            min-height: 300px;
           }
         }
 
@@ -462,14 +451,14 @@ export default function Home({ posts }) {
                     key={post.slug}
                     style={{ textDecoration: 'none' }}
                   >
-                    <article className="featured-article">
+                    <div className="featured-article">
                       <div className="featured-image-wrapper">
-                        <div className="featured-image" />
+                        <div className="featured-image" style={{
+                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                        }} />
                       </div>
                       <div className="featured-content">
-                        <span className="featured-badge">
-                          ⭐ Featured Review
-                        </span>
+                        <div className="featured-badge">⭐ Featured Review</div>
                         <h3 className="featured-title">{post.title}</h3>
                         <div className="featured-meta">
                           <span>📅 {formattedDate}</span>
@@ -483,7 +472,7 @@ export default function Home({ posts }) {
                           Read Full Review →
                         </span>
                       </div>
-                    </article>
+                    </div>
                   </Link>
                 );
               }
@@ -497,19 +486,20 @@ export default function Home({ posts }) {
                 >
                   <article className="article-card">
                     <div className="article-image-wrapper">
-                      <div className="article-image" />
+                      <div className="article-image" style={{
+                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                      }} />
                     </div>
                     <div className="article-content">
                       <div className="article-meta">
-                        <span className="article-date">📅 {formattedDate}</span>
-                        <span>•</span>
+                        <span className="article-date">{formattedDate}</span>
                         <span className="article-category">Review</span>
                       </div>
                       <h3 className="article-title">{post.title}</h3>
                       <p className="article-excerpt">
                         Expert review and comprehensive analysis of premium Korean beauty products.
                       </p>
-                      <span className="read-more">Read Full Review</span>
+                      <span className="read-more">Read Review</span>
                     </div>
                   </article>
                 </Link>
