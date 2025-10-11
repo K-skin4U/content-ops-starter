@@ -444,19 +444,27 @@ export default function Home({ posts }) {
               });
 
               // 첫 번째 글은 Featured로
-              if (index === 0) {
-                return (
-                  <Link 
-                    href={`/posts/${post.slug}`} 
-                    key={post.slug}
-                    style={{ textDecoration: 'none' }}
-                  >
-                    <div className="featured-article">
-                      <div className="featured-image-wrapper">
-                        <div className="featured-image" style={{
-                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                        }} />
-                      </div>
+if (index === 0) {
+  return (
+    <Link 
+      href={`/posts/${post.slug}`} 
+      key={post.slug}
+      style={{ textDecoration: 'none' }}
+    >
+      <div className="featured-article">
+        <div className="featured-image-wrapper">
+          {post.heroImage && post.heroImage.fields ? (
+            <img 
+              src={`https:${post.heroImage.fields.file.url}`}
+              alt={post.title}
+              className="featured-image"
+            />
+          ) : (
+            <div className="featured-image" style={{
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+            }} />
+          )}
+        </div>
                       <div className="featured-content">
                         <div className="featured-badge">⭐ Featured Review</div>
                         <h3 className="featured-title">{post.title}</h3>
@@ -485,11 +493,19 @@ export default function Home({ posts }) {
                   style={{ textDecoration: 'none' }}
                 >
                   <article className="article-card">
-                    <div className="article-image-wrapper">
-                      <div className="article-image" style={{
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                      }} />
-                    </div>
+<div className="article-image-wrapper">
+  {post.heroImage && post.heroImage.fields ? (
+    <img 
+      src={`https:${post.heroImage.fields.file.url}`}
+      alt={post.title}
+      className="article-image"
+    />
+  ) : (
+    <div className="article-image" style={{
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+    }} />
+  )}
+</div>
                     <div className="article-content">
                       <div className="article-meta">
                         <span className="article-date">{formattedDate}</span>
