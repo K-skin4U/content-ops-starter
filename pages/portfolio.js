@@ -415,16 +415,226 @@ export default function Portfolio() {
 
         {/* Main Video */}
         <section className="video-section">
+         <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            Summons Delivery to Pyongyang
+          </h3>
           <div className="video-wrapper">
-            {/* 여기에 YouTube URL을 넣으세요 */}
             <iframe 
-              src="https://www.youtube.com/embed/YOUR_VIDEO_ID" 
+              src="https://www.youtube.com/embed/zytvcaHjWNk" 
               frameBorder="0" 
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
               allowFullScreen
-              title="VOA Korean Service Project">
+              title="2021">
             </iframe>
           </div>
+        </div>
+         <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            Washington Talk Title
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/0bikBzlw6P0" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2022">
+            </iframe>
+          </div>
+        </div>
+          <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            Speak Easy
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/YT0AzRxQ7mY" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2022">
+            </iframe>
+          </div>
+        </div>
+    {/* 비디오 1 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/pXa4ah1v4fU" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">Washington Talk Title</h3>
+        <p className="video-card-description">2023</p>
+      </div>
+    </div>
+
+    {/* 비디오 2 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/TZC4prR_MGo" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">VOA Morning News</h3>
+        <p className="video-card-description">2023</p>
+      </div>
+    </div>
+     {/* 비디오 1 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/dxWK1kNaXJE" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">Embassy Row</h3>
+        <p className="video-card-description">2023</p>
+      </div>
+    </div>
+
+    {/* 비디오 2 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/fYDzrm5n3os" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">Potomac Sketch</h3>
+        <p className="video-card-description">2023</p>
+      </div>
+    </div>
+       <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            World News Transition
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/s2443j1TuEI" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2024">
+            </iframe>
+          </div>
+        </div>
+          <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            VOA Issue Diagnosis
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/3EyQQFMdCv0" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2024">
+            </iframe>
+          </div>
+        </div>
+   {/* 비디오 1 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/L4GyKG1Ijmg" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">Radio on TV</h3>
+        <p className="video-card-description">2024</p>
+      </div>
+    </div>
+
+    {/* 비디오 2 */}
+    <div className="video-card">
+      <div className="video-card-wrapper">
+        <iframe 
+          src="https://www.youtube.com/embed/41HiCiOB3X0" 
+          frameBorder="0" 
+          allowFullScreen>
+        </iframe>
+      </div>
+      <div className="video-card-info">
+        <h3 className="video-card-title">VOA Everyday English Plus</h3>
+        <p className="video-card-description">2024</p>
+      </div>
+    </div>
+      <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            Washington Talk Title
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/pMhw89OFmzQ" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2025">
+            </iframe>
+          </div>
+        </div>
+         <div style={{ marginBottom: '50px' }}>
+          <h3 style={{ 
+            fontSize: '1.2rem', 
+            fontWeight: '600', 
+            marginBottom: '15px',
+            color: '#2c2c2c'
+          }}>
+            VOA Today
+          </h3>
+          <div className="video-wrapper">
+            <iframe 
+              src="https://www.youtube.com/embed/pOqJT-a861A" 
+              frameBorder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowFullScreen
+              title="2025">
+            </iframe>
+          </div>
+        </div>
         </section>
 
         {/* Description */}
