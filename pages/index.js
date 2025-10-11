@@ -108,8 +108,8 @@ export default function Home({ posts }) {
         /* Articles Grid */
         .articles-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-          gap: 40px;
+          grid-template-columns: 1fr;
+          gap: 30px;
         }
 
         .article-card {
@@ -120,11 +120,16 @@ export default function Home({ posts }) {
           transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
           position: relative;
           cursor: pointer;
+          display: grid;
+          grid-template-columns: 280px 1fr;
+          gap: 0;
+          border: 2px solid transparent;
         }
 
         .article-card:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+          transform: translateY(-4px);
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+          border-color: #667eea;
         }
 
         .article-card::before {
@@ -132,21 +137,22 @@ export default function Home({ posts }) {
           position: absolute;
           top: 0;
           left: 0;
-          right: 0;
-          height: 4px;
-          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-          transform: scaleX(0);
+          bottom: 0;
+          width: 4px;
+          background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
+          transform: scaleY(0);
           transition: transform 0.4s ease;
         }
 
         .article-card:hover::before {
-          transform: scaleX(1);
+          transform: scaleY(1);
         }
 
         .article-image-wrapper {
           position: relative;
           width: 100%;
-          height: 240px;
+          height: 100%;
+          min-height: 220px;
           background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
           overflow: hidden;
         }
@@ -163,15 +169,18 @@ export default function Home({ posts }) {
         }
 
         .article-content {
-          padding: 30px;
+          padding: 30px 35px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
         }
 
         .article-meta {
           display: flex;
           align-items: center;
-          gap: 15px;
-          margin-bottom: 15px;
-          font-size: 0.85rem;
+          gap: 12px;
+          margin-bottom: 12px;
+          font-size: 0.8rem;
           color: #999;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
@@ -184,25 +193,21 @@ export default function Home({ posts }) {
           gap: 6px;
         }
 
-        .article-date::before {
-          content: '📅';
-          font-size: 0.9rem;
-        }
-
         .article-category {
-          background: #f0f0f0;
-          padding: 4px 12px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 4px 14px;
           border-radius: 20px;
-          font-weight: 500;
-          color: #667eea;
+          font-weight: 600;
+          font-size: 0.75rem;
         }
 
         .article-title {
-          font-size: 1.5rem;
+          font-size: 1.4rem;
           font-weight: 600;
           color: #2c2c2c;
           margin-bottom: 12px;
-          line-height: 1.3;
+          line-height: 1.4;
           display: -webkit-box;
           -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
@@ -216,7 +221,7 @@ export default function Home({ posts }) {
           margin-bottom: 20px;
           font-family: 'Lato', sans-serif;
           display: -webkit-box;
-          -webkit-line-clamp: 3;
+          -webkit-line-clamp: 2;
           -webkit-box-orient: vertical;
           overflow: hidden;
         }
@@ -226,17 +231,18 @@ export default function Home({ posts }) {
           align-items: center;
           gap: 8px;
           color: #667eea;
-          font-weight: 600;
-          font-size: 0.9rem;
+          font-weight: 700;
+          font-size: 0.85rem;
           text-decoration: none;
           font-family: 'Lato', sans-serif;
           text-transform: uppercase;
           letter-spacing: 1px;
-          transition: gap 0.3s ease;
+          transition: all 0.3s ease;
         }
 
         .read-more:hover {
           gap: 12px;
+          color: #764ba2;
         }
 
         .read-more::after {
@@ -246,82 +252,99 @@ export default function Home({ posts }) {
 
         /* Featured Article (첫 번째 글) */
         .featured-article {
-          grid-column: 1 / -1;
-          display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 40px;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: #ffffff;
           border-radius: 16px;
           overflow: hidden;
-          padding: 0;
-          margin-bottom: 20px;
+          box-shadow: 0 4px 30px rgba(0, 0, 0, 0.12);
+          margin-bottom: 40px;
+          transition: all 0.4s ease;
+          border: 2px solid transparent;
+        }
+
+        .featured-article:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 8px 40px rgba(102, 126, 234, 0.2);
+          border-color: #667eea;
         }
 
         .featured-image-wrapper {
-          height: 100%;
-          min-height: 400px;
+          width: 100%;
+          height: 400px;
           position: relative;
           overflow: hidden;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
 
         .featured-image {
           width: 100%;
           height: 100%;
           object-fit: cover;
+          transition: transform 0.6s ease;
+        }
+
+        .featured-article:hover .featured-image {
+          transform: scale(1.05);
         }
 
         .featured-content {
-          padding: 60px;
-          color: white;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
+          padding: 40px;
         }
 
         .featured-badge {
-          display: inline-block;
-          background: rgba(255, 255, 255, 0.2);
-          backdrop-filter: blur(10px);
-          padding: 6px 16px;
-          border-radius: 20px;
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 8px 18px;
+          border-radius: 25px;
           font-size: 0.75rem;
-          letter-spacing: 2px;
+          letter-spacing: 1.5px;
           text-transform: uppercase;
           margin-bottom: 20px;
-          width: fit-content;
-          border: 1px solid rgba(255, 255, 255, 0.3);
+          font-weight: 600;
+          font-family: 'Lato', sans-serif;
         }
 
         .featured-title {
-          font-size: 2.5rem;
+          font-size: 2rem;
           font-weight: 700;
-          margin-bottom: 20px;
-          line-height: 1.2;
-        }
-
-        .featured-excerpt {
-          font-size: 1.1rem;
-          line-height: 1.8;
-          margin-bottom: 30px;
-          opacity: 0.95;
+          margin-bottom: 15px;
+          line-height: 1.3;
+          color: #2c2c2c;
         }
 
         .featured-meta {
           display: flex;
           align-items: center;
-          gap: 20px;
-          margin-bottom: 30px;
-          opacity: 0.9;
-          font-size: 0.9rem;
+          gap: 15px;
+          margin-bottom: 15px;
+          font-size: 0.85rem;
+          color: #999;
+          font-family: 'Lato', sans-serif;
+        }
+
+        .featured-meta span {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+        }
+
+        .featured-excerpt {
+          font-size: 1rem;
+          line-height: 1.8;
+          margin-bottom: 25px;
+          color: #666;
+          font-family: 'Lato', sans-serif;
         }
 
         .featured-read-more {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          background: white;
-          color: #667eea;
-          padding: 15px 35px;
+          gap: 8px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 14px 32px;
           border-radius: 50px;
           font-weight: 700;
           text-decoration: none;
@@ -329,13 +352,13 @@ export default function Home({ posts }) {
           text-transform: uppercase;
           letter-spacing: 1px;
           transition: all 0.3s ease;
-          width: fit-content;
-          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+          font-size: 0.85rem;
+          box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
         }
 
         .featured-read-more:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 6px 25px rgba(102, 126, 234, 0.4);
         }
 
         /* Empty State */
@@ -358,16 +381,21 @@ export default function Home({ posts }) {
 
         /* Responsive */
         @media (max-width: 968px) {
-          .featured-article {
+          .article-card {
             grid-template-columns: 1fr;
           }
 
+          .article-image-wrapper {
+            height: 240px;
+            min-height: 240px;
+          }
+
           .featured-content {
-            padding: 40px 30px;
+            padding: 30px;
           }
 
           .featured-title {
-            font-size: 2rem;
+            font-size: 1.7rem;
           }
 
           .site-title {
@@ -376,10 +404,6 @@ export default function Home({ posts }) {
         }
 
         @media (max-width: 768px) {
-          .articles-grid {
-            grid-template-columns: 1fr;
-          }
-
           .site-title {
             font-size: 2rem;
           }
@@ -389,7 +413,11 @@ export default function Home({ posts }) {
           }
 
           .featured-image-wrapper {
-            min-height: 300px;
+            height: 280px;
+          }
+
+          .article-content {
+            padding: 25px;
           }
         }
 
@@ -434,14 +462,14 @@ export default function Home({ posts }) {
                     key={post.slug}
                     style={{ textDecoration: 'none' }}
                   >
-                    <div className="featured-article">
+                    <article className="featured-article">
                       <div className="featured-image-wrapper">
-                        <div className="featured-image" style={{
-                          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                        }} />
+                        <div className="featured-image" />
                       </div>
                       <div className="featured-content">
-                        <div className="featured-badge">⭐ Featured Review</div>
+                        <span className="featured-badge">
+                          ⭐ Featured Review
+                        </span>
                         <h3 className="featured-title">{post.title}</h3>
                         <div className="featured-meta">
                           <span>📅 {formattedDate}</span>
@@ -455,7 +483,7 @@ export default function Home({ posts }) {
                           Read Full Review →
                         </span>
                       </div>
-                    </div>
+                    </article>
                   </Link>
                 );
               }
@@ -469,20 +497,19 @@ export default function Home({ posts }) {
                 >
                   <article className="article-card">
                     <div className="article-image-wrapper">
-                      <div className="article-image" style={{
-                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                      }} />
+                      <div className="article-image" />
                     </div>
                     <div className="article-content">
                       <div className="article-meta">
-                        <span className="article-date">{formattedDate}</span>
+                        <span className="article-date">📅 {formattedDate}</span>
+                        <span>•</span>
                         <span className="article-category">Review</span>
                       </div>
                       <h3 className="article-title">{post.title}</h3>
                       <p className="article-excerpt">
                         Expert review and comprehensive analysis of premium Korean beauty products.
                       </p>
-                      <span className="read-more">Read Review</span>
+                      <span className="read-more">Read Full Review</span>
                     </div>
                   </article>
                 </Link>
