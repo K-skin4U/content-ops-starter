@@ -433,6 +433,35 @@ export default function Home({ posts }) {
           <p className="site-tagline">
             Professional Korean Skincare Reviews & Beauty Insights
           </p>
+          <div style={{ marginTop: '25px' }}>
+            <a 
+              href="/portfolio" 
+              style={{
+                display: 'inline-block',
+                padding: '12px 30px',
+                background: 'rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(10px)',
+                border: '2px solid rgba(255,255,255,0.3)',
+                borderRadius: '30px',
+                color: 'white',
+                textDecoration: 'none',
+                fontWeight: '600',
+                fontSize: '0.95rem',
+                transition: 'all 0.3s',
+                letterSpacing: '0.5px'
+              }}
+              onMouseOver={(e) => {
+                e.target.style.background = 'rgba(255,255,255,0.25)';
+                e.target.style.borderColor = 'rgba(255,255,255,0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.background = 'rgba(255,255,255,0.15)';
+                e.target.style.borderColor = 'rgba(255,255,255,0.3)';
+              }}
+            >
+              View Portfolio →
+            </a>
+          </div>
         </div>
       </header>
 
