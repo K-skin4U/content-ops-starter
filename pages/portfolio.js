@@ -659,16 +659,10 @@ export default function Portfolio() {
           <h2 className="section-title">Project Gallery</h2>
           <div className="gallery-grid">
             <div className="gallery-item">
-              <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=VOA+Project+1" alt="VOA Project 1" />
+              <img src="https://app.contentful.com/spaces/rla9izt6a59s/assets/3bhGliffSnooxfFGe5tk5q" alt="VOA Youtube and Web Redesign" />
             </div>
             <div className="gallery-item">
-              <img src="https://via.placeholder.com/800x500/764ba2/ffffff?text=VOA+Project+2" alt="VOA Project 2" />
-            </div>
-            <div className="gallery-item">
-              <img src="https://via.placeholder.com/800x500/667eea/ffffff?text=VOA+Project+3" alt="VOA Project 3" />
-            </div>
-            <div className="gallery-item">
-              <img src="https://via.placeholder.com/800x500/764ba2/ffffff?text=VOA+Project+4" alt="VOA Project 4" />
+              <img src="https://app.contentful.com/spaces/rla9izt6a59s/assets/5oFyf3IIgN5qm36mWhb2oX" alt="2017 KBS(Korean Broadcasting System)" />
             </div>
           </div>
         </section>
